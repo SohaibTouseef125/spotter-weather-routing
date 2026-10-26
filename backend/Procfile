@@ -1,0 +1,1 @@
+web: gunicorn weather_route.wsgi:application --bind 0.0.0.0:$PORT

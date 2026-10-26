@@ -1,0 +1,19 @@
+# Render blueprint — one-click backend deploy.
+# In Render: New -> Blueprint -> point at this repo, or New Web Service
+# with the settings below. No paid plan needed (free tier sleeps on idle;
+# open the backend URL once before recording the Loom walkthrough).
+services:
+  - type: web
+    name: spotter-weather-routing-api
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn weather_route.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: "*"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+    healthCheckPath: /api/health/
